@@ -1,0 +1,29 @@
+# architecture.md
+EventDB Core - Architecture Diagram (Mermaid)
+Version: 0.1
+Status: Draft
+
+```mermaid
+flowchart LR
+  subgraph LB[Ledger Boundary]
+    A[Account Authority]
+    C[Chain]
+    E[Event Append-Only Sequence]
+    S[Seal Checkpoints]
+    P[Snapshot Checkpoints]
+
+    A --> E
+    E --> C
+    C --> S
+    C --> P
+  end
+
+  V[Verifier]
+  X[External Proof Surface (Optional Anchor)]
+
+  C --> V
+  S --> V
+  P --> V
+  S -. optional commitment .-> X
+  X -. evidence retrieval .-> V
+```

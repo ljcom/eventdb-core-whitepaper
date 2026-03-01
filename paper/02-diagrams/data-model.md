@@ -1,0 +1,51 @@
+# data-model.md
+EventDB Core - Core Data Model Diagram (Mermaid)
+Version: 0.1
+Status: Draft
+
+```mermaid
+erDiagram
+  NAMESPACE ||--o{ CHAIN : scopes
+  ACCOUNT ||--o{ EVENT : signs
+  ACCOUNT ||--o{ SEAL : signs
+  CHAIN ||--o{ EVENT : contains
+  CHAIN ||--o{ SEAL : checkpoints
+  CHAIN ||--o{ SNAPSHOT : derives
+  SEAL ||--o{ SNAPSHOT : basis
+
+  NAMESPACE {
+    string namespace_id PK
+  }
+
+  CHAIN {
+    string chain_id PK
+    string namespace_id FK
+  }
+
+  EVENT {
+    string event_id PK
+    string chain_id FK
+    string namespace_id FK
+    int sequence
+    string prev_hash
+  }
+
+  SEAL {
+    string window_id PK
+    string chain_id FK
+    string namespace_id FK
+    string prev_seal_hash
+    string seal_hash
+  }
+
+  SNAPSHOT {
+    string snapshot_id PK
+    string chain_id FK
+    string namespace_id FK
+    string snapshot_hash
+  }
+
+  ACCOUNT {
+    string account_id PK
+  }
+```

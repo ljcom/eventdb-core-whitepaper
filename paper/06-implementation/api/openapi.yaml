@@ -150,13 +150,13 @@ components:
           type: string
         payload:
           description: Opaque event payload. Integrity layer does not interpret content.
+          nullable: true
           oneOf:
             - type: object
             - type: array
             - type: string
             - type: number
             - type: boolean
-            - type: 'null'
         metadata:
           type: object
           additionalProperties: true
@@ -193,13 +193,13 @@ components:
         chain_id:
           type: string
         payload:
+          nullable: true
           oneOf:
             - type: object
             - type: array
             - type: string
             - type: number
             - type: boolean
-            - type: 'null'
         metadata:
           type: object
           additionalProperties: true

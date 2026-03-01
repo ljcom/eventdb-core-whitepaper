@@ -88,6 +88,6 @@ This whitepaper section is conceptual. Normative definitions, required fields, a
 - `03-spec/03-event-envelope.md` for envelope field semantics and required scope;
 - `03-spec/04-hashing-rule.md` for canonical hashing input and digest rules;
 - `03-spec/06-chain-and-ordering.md` for Chain ordering and `prev_hash` verification constraints;
-- `04-mvp/scripts/canonical-json.md` for canonical JSON implementation guidance.
+- `05-mvp/scripts/canonical-json.md` for canonical JSON implementation guidance.
 
 Where this overview and formal specification differ, the formal specification MUST take precedence.

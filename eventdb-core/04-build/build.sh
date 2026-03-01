@@ -14,16 +14,13 @@ if ! command -v pandoc >/dev/null 2>&1; then
   exit 1
 fi
 
-if ! command -v xelatex >/dev/null 2>&1; then
-  cat >&2 <<'MSG'
-ERROR: xelatex is required but not installed.
-Install XeLaTeX on macOS with one of:
-  brew install --cask mactex-no-gui
-  # or (full)
-  brew install --cask mactex
+PDF_ENGINE="/Library/TeX/texbin/xelatex"
 
-After install, restart terminal and verify:
-  xelatex --version
+if [[ ! -x "$PDF_ENGINE" ]]; then
+  cat >&2 <<'MSG'
+ERROR: required XeLaTeX engine not found at:
+  /Library/TeX/texbin/xelatex
+Install MacTeX and ensure this path is available.
 MSG
   exit 1
 fi
@@ -59,7 +56,7 @@ for f in "${SOURCES[@]}"; do
 done
 
 {
-  echo "% EventDB Core Whitepaper"
+  echo "% EventDB Core: A Deterministic Integrity Layer for Enterprise Systems Without Mandatory Blockchain"
   echo "% Version 0.1"
   echo "% $(date +%F)"
   echo
@@ -78,7 +75,7 @@ PANDOC_ARGS=(
   --toc
   --toc-depth=2
   --number-sections
-  --pdf-engine=xelatex
+  --pdf-engine="$PDF_ENGINE"
   -V geometry:margin=1in
   -V colorlinks=true
   -V linkcolor=blue

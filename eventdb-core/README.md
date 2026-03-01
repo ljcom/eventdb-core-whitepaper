@@ -10,8 +10,8 @@ snapshot checkpoints, and optional anchoring.
 - `01-whitepaper/`: conceptual and architectural documentation.
 - `02-diagrams/`: draw.io sources for architecture and process views.
 - `03-spec/`: normative protocol and verification specification.
-- `04-mvp/`: MVP schema, sample artifacts, and walkthrough.
-- `05-implementation/`: adapter, API, and operational implementation notes.
+- `05-mvp/`: MVP schema, sample artifacts, and walkthrough.
+- `06-implementation/`: adapter, API, and operational implementation notes.
 
 ## Core Positioning
 

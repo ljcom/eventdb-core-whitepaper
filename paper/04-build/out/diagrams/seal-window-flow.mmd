@@ -1,0 +1,19 @@
+sequenceDiagram
+  participant I as Ingest Service
+  participant C as Chain Store
+  participant W as Window Policy
+  participant G as Seal Generator
+  participant V as Verifier
+
+  I->>C: Append Event (namespace_id, chain_id, sequence)
+  C-->>I: Event accepted
+  C->>W: Evaluate window trigger
+  W-->>G: Window closed (start_seq, end_seq)
+  G->>C: Read window Events in canonical order
+  G->>G: Compute window_commitment_hash
+  G->>G: Build seal input S
+  G->>G: Compute seal_hash and sign
+  G->>C: Persist Seal (namespace_id, chain_id, window_id)
+  V->>C: Fetch Seal and window Events
+  V->>V: Recompute commitment and seal_hash
+  V-->>V: PASS if linkage and signature valid

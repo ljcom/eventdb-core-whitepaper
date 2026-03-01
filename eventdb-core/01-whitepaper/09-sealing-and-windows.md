@@ -2,7 +2,7 @@
 EventDB Core - Sealing and Windows
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 This section defines the conceptual model for Event windows and Seals in EventDB Core. The focus is integrity checkpointing over Chain segments. External anchoring behavior is intentionally out of scope here.
 

@@ -2,7 +2,7 @@
 EventDB Core - Problem Statement
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 Enterprise information systems are generally designed around mutable data stores. This design supports correction, operational agility, and lifecycle management, but it does not provide deterministic guarantees about historical integrity. Records can be updated or deleted, and historical state is often reconstructed from auxiliary artifacts rather than preserved as a cryptographically verifiable sequence. For institutions that require reliable historical evidence, this creates a persistent structural risk: operational systems can process transactions correctly while still failing to prove that prior records were not altered after the fact.
 

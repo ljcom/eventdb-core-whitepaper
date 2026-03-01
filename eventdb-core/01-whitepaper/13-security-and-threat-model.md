@@ -2,7 +2,7 @@
 EventDB Core - Security and Threat Model
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 This section defines the conceptual threat model for EventDB Core and maps core mitigations to deterministic integrity controls. The focus is integrity risk in Event history and verification artifacts, not full organizational cybersecurity coverage.
 

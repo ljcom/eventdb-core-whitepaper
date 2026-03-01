@@ -2,7 +2,7 @@
 EventDB Core - Related Work
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 EventDB Core draws from three established design families: event sourcing, append-only audit logging, and cryptographic integrity ledgers. The model adopts deterministic sequence verification from integrity ledger practice while preserving operational compatibility expected in institutional systems.
 

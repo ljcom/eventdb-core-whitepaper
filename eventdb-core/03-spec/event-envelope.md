@@ -2,7 +2,7 @@
 EventDB Core - Event Envelope (Compatibility Specification)
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 This file provides a compatibility alias for `03-spec/03-event-envelope.md`.
 Normative envelope rules are defined in that numbered specification.

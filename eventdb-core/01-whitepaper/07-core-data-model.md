@@ -2,7 +2,7 @@
 EventDB Core - Core Data Model
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 This section defines the conceptual data model of EventDB Core. The model is logical and verification-oriented. It specifies entity meaning, integrity role, and relationships, independent of storage schema or vendor implementation.
 

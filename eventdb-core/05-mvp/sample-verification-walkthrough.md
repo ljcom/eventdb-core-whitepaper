@@ -2,7 +2,7 @@
 EventDB Core - Sample Verification Walkthrough
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 This walkthrough describes a conceptual verification flow for an EventDB Chain. The objective is deterministic integrity verification: equivalent input MUST produce equivalent verification outcomes.
 

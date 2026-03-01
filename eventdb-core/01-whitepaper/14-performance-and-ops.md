@@ -2,7 +2,7 @@
 EventDB Core - Performance and Operations
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 This section outlines operational considerations for running EventDB Core at enterprise scale. The focus is on integrity-preserving performance strategy and operational control boundaries. Recommendations are implementation-agnostic and avoid vendor-specific assumptions.
 

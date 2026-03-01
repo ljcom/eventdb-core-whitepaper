@@ -2,7 +2,7 @@
 EventDB Core - Whitepaper Roadmap
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 ## Near-Term Objectives
 

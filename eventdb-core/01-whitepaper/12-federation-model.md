@@ -2,7 +2,7 @@
 EventDB Core - Federation Model
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 This section defines the federated deployment model of EventDB Core. The model is governance-aware and integrity-focused: each institution can operate independently while still supporting cross-boundary verification.
 

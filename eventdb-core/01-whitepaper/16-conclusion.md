@@ -2,7 +2,7 @@
 EventDB Core - Conclusion
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 EventDB Core defines a bounded integrity architecture for enterprise Event history. The model provides deterministic tamper-evident verification through canonical hashing, hash chaining, accountable signatures, and periodic sealing, with optional anchor externalization.
 

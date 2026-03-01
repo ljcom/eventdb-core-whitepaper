@@ -2,7 +2,7 @@
 EventDB Core - Architecture Overview
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 EventDB Core defines a layered integrity architecture for enterprise Event history. The architecture is logical and verification-oriented: it specifies how integrity evidence is produced and validated, independent of any single storage engine. The core objective is deterministic tamper evidence with explicit governance boundaries.
 

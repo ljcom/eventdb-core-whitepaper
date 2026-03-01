@@ -2,7 +2,7 @@
 EventDB Core - Signature Rule
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 ## 1. Scope
 

@@ -2,7 +2,7 @@
 EventDB Core - Anchoring Interface
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 This section defines the conceptual anchoring interface in EventDB Core. Anchoring is treated as an optional integrity extension that publishes bounded proof artifacts to an external system. It is not a replacement for core Chain and Seal verification.
 

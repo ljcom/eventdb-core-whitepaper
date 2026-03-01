@@ -2,7 +2,7 @@
 EventDB Core - Design Goals
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 - The core integrity model MUST be deterministic. Equivalent Event input under the same canonical rules MUST produce equivalent verification outcomes across independent verifiers.
 - Hashing, signature, Chain ordering, and Seal verification rules MUST be explicitly defined and MUST NOT depend on implicit runtime behavior.

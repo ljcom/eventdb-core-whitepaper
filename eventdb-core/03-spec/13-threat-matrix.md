@@ -2,7 +2,7 @@
 EventDB Core - Threat Matrix
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 EventDB Core provides integrity-oriented protection through canonical hashing, hash chaining, signature verification, and Seal continuity checks. These controls are designed to make unauthorized history changes detectable and attributable within defined governance boundaries. The model does not guarantee factual correctness of Event payloads, legal validity, or complete prevention of insider misuse. Residual risk remains when key governance fails, verification is not executed, or policy enforcement is weak. This matrix defines major integrity threats, expected impact, primary mitigation mechanism, and remaining exposure after controls are applied.
 

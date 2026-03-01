@@ -66,8 +66,6 @@ done
   for f in "${SOURCES[@]}"; do
     cat "$f"
     echo
-    echo "\\newpage"
-    echo
   done
 } > "$TMP_MD"
 

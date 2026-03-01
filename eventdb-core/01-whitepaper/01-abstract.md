@@ -2,7 +2,7 @@
 EventDB Core - Abstract
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 Modern enterprise systems are commonly built on relational data stores that permit record mutation through update and delete operations. This model supports operational flexibility, but it weakens the integrity of historical state because past records can be altered after the fact. As a result, many organizations depend on procedural controls, privileged access policies, or partial audit logs that SHOULD improve accountability but do not cryptographically enforce sequence integrity. For systems that require verifiable history, mutable persistence creates a structural gap between operational databases and tamper-evident evidence.
 

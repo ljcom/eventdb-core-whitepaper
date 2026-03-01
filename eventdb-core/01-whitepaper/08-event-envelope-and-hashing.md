@@ -2,7 +2,7 @@
 EventDB Core - Event Envelope and Hashing
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 This section explains the conceptual structure of the Event envelope and the hashing logic used for deterministic integrity verification. It defines what MUST be stable for verification and why canonical representation is required.
 

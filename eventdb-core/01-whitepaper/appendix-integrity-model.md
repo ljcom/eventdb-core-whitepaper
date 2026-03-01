@@ -2,7 +2,7 @@
 EventDB Core - Appendix: Integrity Model
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 This appendix defines a compact formal model for EventDB Core integrity behavior. The notation is intentionally minimal and is used to express deterministic verification conditions.
 

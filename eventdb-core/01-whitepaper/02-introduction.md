@@ -2,7 +2,7 @@
 EventDB Core - Introduction
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 Enterprise systems require both operational flexibility and verifiable historical integrity. Conventional databases optimize mutable state management, while integrity assurance needs immutable, reproducible sequence verification. EventDB Core addresses this mismatch by defining a deterministic integrity layer that can coexist with institutional systems.
 

@@ -2,7 +2,7 @@
 EventDB Core - Snapshot and Retention
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 This section defines the conceptual snapshot and retention model in EventDB Core. The goal is to improve operational scalability while preserving deterministic integrity claims. The focus is logical behavior, not storage engine design.
 

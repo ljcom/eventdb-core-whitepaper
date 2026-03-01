@@ -2,7 +2,7 @@
 EventDB Core - Non-Goals
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 This section defines explicit non-goals of EventDB Core to preserve architectural clarity and prevent scope drift. EventDB Core specifies a deterministic integrity layer for append-only Event history, accountable signing, and tamper-evident verification. Components or claims outside this integrity scope are out of model boundary.
 

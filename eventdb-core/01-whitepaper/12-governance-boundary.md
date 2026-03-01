@@ -2,7 +2,7 @@
 EventDB Core - Governance Boundary
 Version: 0.1
 Status: Draft
-Change Log Reference: 00-admin/PROJECT_MEMORY.md
+
 
 This section defines governance boundaries for EventDB Core with emphasis on accountability, auditability, and liability clarity. The objective is to ensure that technical integrity controls are interpreted within explicit institutional responsibility structures.
 

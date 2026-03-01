@@ -26,6 +26,13 @@ An Event envelope MUST contain all fields below:
 An Event envelope MUST NOT omit any required field.
 An Event envelope MAY include additional non-canonical fields, but such fields MUST NOT affect canonical hashing, signature verification, or validation outcome.
 
+## 2A. Optional Field
+
+- `namespace_id` MAY be included as Event metadata.
+- If present, `namespace_id` MUST be treated as immutable once the Event is recorded.
+- `namespace_id` MUST represent a ledger boundary identifier only.
+- `namespace_id` MUST NOT be interpreted as user identity, business account, or asset ownership marker.
+
 ## 3. Field Format Rules
 
 ### 3.1 `chain_id`
@@ -75,6 +82,12 @@ An Event envelope MAY include additional non-canonical fields, but such fields M
 - MUST be a non-empty encoded signature value.
 - MUST be verifiable against `account_id` and canonical signing input.
 
+### 3.10 `namespace_id` (optional)
+
+- MAY be omitted.
+- If present, MUST be a non-empty UTF-8 string.
+- If present, MUST remain unchanged for the recorded Event artifact.
+
 ## 4. Canonicalization Rule
 
 Before hashing or signature verification, the Event envelope input MUST be canonicalized.
@@ -96,6 +109,8 @@ Let `E` be the canonical Event envelope object containing:
 - `event_type`
 - `event_time`
 - `payload`
+
+If `namespace_id` is present, it MUST be included in `E`.
 
 Event hash MUST be computed as `H(E)`.
 Any change in any covered field MUST change `H(E)`.
@@ -120,13 +135,14 @@ This section defines mandatory input scope and verification behavior.
 A verifier MUST execute validation in this order:
 
 1. Confirm presence of all required fields.
-2. Confirm each field format rule in Section 3.
+2. Confirm each field format rule in Section 3, including optional `namespace_id` when present.
 3. Build canonical object `E` from required fields excluding `signature`.
-4. Canonicalize `E` using deterministic JSON rules.
-5. Compute `H(E)` and compare with expected chain continuity context.
-6. Verify `prev_hash` linkage against prior Event by `sequence`.
-7. Verify `signature` against canonical `E` and `account_id`.
-8. Accept Event only if all prior steps pass.
+4. If `namespace_id` is present, include it in canonical object `E`.
+5. Canonicalize `E` using deterministic JSON rules.
+6. Compute `H(E)` and compare with expected chain continuity context.
+7. Verify `prev_hash` linkage against prior Event by `sequence`.
+8. Verify `signature` against canonical `E` and `account_id`.
+9. Accept Event only if all prior steps pass.
 
 If any step fails, the Event MUST be rejected as invalid for integrity verification.
 

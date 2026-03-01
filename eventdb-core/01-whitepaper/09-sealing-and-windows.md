@@ -64,6 +64,9 @@ A valid Seal does NOT prove that Event payloads are factually correct, legally e
 
 For this reason, Seal verification MUST be interpreted as integrity evidence, not as confirmation of business truth. Domain validation, legal interpretation, and factual adjudication remain outside the Seal model.
 
+Deterministic verification is scoped per Chain within a ledger boundary.
+Verification across ledger boundaries requires verifiable artifact exchange rather than shared ordering assumptions.
+
 ## 6. Scope Boundary
 
 This section defines only windowing and sealing semantics at the integrity layer. Storage-specific design, transport details, and external publication mechanisms are implementation or interface concerns addressed in other sections.

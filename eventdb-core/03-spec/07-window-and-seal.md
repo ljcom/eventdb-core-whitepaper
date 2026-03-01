@@ -15,6 +15,7 @@ Each window MUST have a deterministic identifier `window_id`.
 
 `window_id` MUST be uniquely derived from the following tuple:
 
+- `namespace_id`
 - `chain_id`
 - `window_start_sequence`
 - `window_end_sequence`
@@ -23,8 +24,9 @@ Rules:
 
 - `window_start_sequence` MUST be less than or equal to `window_end_sequence`.
 - A window MUST represent a contiguous Event sequence range.
-- For a given `chain_id` and sequence range, `window_id` MUST be identical across verifiers.
-- Two distinct windows in the same `chain_id` MUST NOT share the same `window_id`.
+- For a given (`namespace_id`, `chain_id`) and sequence range, `window_id` MUST be identical across verifiers.
+- Two distinct windows in the same (`namespace_id`, `chain_id`) scope MUST NOT share the same `window_id`.
+- A window MUST be defined per (`namespace_id`, `chain_id`).
 
 ## 3. Seal Creation Trigger
 
@@ -48,6 +50,7 @@ If trigger conditions are not satisfied, Seal creation MUST NOT occur.
 
 A Seal object MUST include at least:
 
+- `namespace_id`
 - `chain_id`
 - `window_id`
 - `window_start_sequence`
@@ -62,7 +65,7 @@ Additional fields MAY exist but MUST NOT alter canonical hash coverage defined i
 
 ## 5. `prev_seal_hash` Linkage
 
-`prev_seal_hash` MUST link Seals in strict order within one `chain_id`.
+`prev_seal_hash` MUST link Seals in strict order within one (`namespace_id`, `chain_id`).
 
 Rules:
 
@@ -78,6 +81,7 @@ Any break in `prev_seal_hash` continuity MUST cause Seal verification failure.
 
 `S` MUST include exactly:
 
+- `namespace_id`
 - `chain_id`
 - `window_id`
 - `window_start_sequence`
@@ -86,6 +90,9 @@ Any break in `prev_seal_hash` continuity MUST cause Seal verification failure.
 - `window_commitment_hash`
 - `account_id`
 - `seal_time`
+
+`S` MUST be scoped to exactly one namespace and one chain.
+A Seal MUST NOT include Events from other namespaces.
 
 Definitions:
 
@@ -101,6 +108,7 @@ Computation:
 - Compute `seal_hash = H(S)`.
 
 Any change to any covered field in `S` MUST change `seal_hash`.
+Namespace scoping constrains input selection only and MUST NOT change hash function or seal mechanics.
 
 ## 7. Signature Rule
 
@@ -122,9 +130,10 @@ A verifier MUST execute the following steps in order:
 2. Validate window boundary consistency and contiguity assumptions.
 3. Recompute `window_commitment_hash` from Events in `[window_start_sequence, window_end_sequence]`.
 4. Build canonical `S` and recompute `seal_hash`.
-5. Validate `prev_seal_hash` continuity against prior Seal in the same `chain_id`.
-6. Verify `signature` over canonical `S` using `account_id`.
-7. Accept Seal only if all checks pass.
+5. Validate all Events in the window belong to the same `namespace_id` and `chain_id`.
+6. Validate `prev_seal_hash` continuity against prior Seal in the same (`namespace_id`, `chain_id`).
+7. Verify `signature` over canonical `S` using `account_id`.
+8. Accept Seal only if all checks pass.
 
 If any step fails, the Seal MUST be rejected as invalid.
 
@@ -136,4 +145,5 @@ An implementation MUST be considered non-conformant if it:
 - emits Seals for non-contiguous or mutable window ranges;
 - accepts invalid `prev_seal_hash` linkage;
 - computes `seal_hash` from non-canonical input;
+- accepts windows containing mixed-namespace Events;
 - accepts Seals with invalid signature or unresolved window commitment mismatch.

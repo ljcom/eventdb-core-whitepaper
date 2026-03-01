@@ -27,6 +27,7 @@ If any future feature contradicts these principles, it must be reconsidered.
 4. Snapshots do not rewrite history.
 5. Anchoring does not define business truth.
 6. Governance boundary must be explicit.
+7. Namespace is a ledger boundary, not a business entity.
 
 ---
 

@@ -24,4 +24,7 @@ Integrity evidence MAY support legal review, but it does not create automatic le
 EventDB Core is NOT a physical asset authenticity verifier.
 The model verifies integrity of recorded digital evidence, not physical state or provenance truth of real-world objects. Physical authenticity requires external attestation, inspection, and domain-specific controls.
 
+EventDB Core does NOT define cross-ledger atomic transaction semantics.
+EventDB Core does NOT enforce cross-boundary business state synchronization.
+
 These non-goals preserve the intended positioning of EventDB Core as a bounded integrity architecture. The system provides deterministic tamper-evident history and accountable verification primitives, while business truth, legal validity, market behavior, and physical-world authenticity remain explicitly outside core claims.

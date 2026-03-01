@@ -30,3 +30,24 @@ A conforming implementation MUST preserve deterministic verification outcomes fo
 ## 4. Non-Claims
 
 The core model MUST NOT claim business truth, legal enforceability, or physical authenticity.
+
+## 5. Ledger Namespace
+
+`namespace_id` defines a logical ledger boundary for Event chains.
+Namespace is a grouping and isolation construct for integrity operations.
+
+Namespace MAY be used for:
+
+- Multi-tenant isolation.
+- Governance boundary expression.
+- Seal and Snapshot grouping.
+
+Namespace MUST NOT be interpreted as:
+
+- business account identity;
+- user identity;
+- ownership identity for any asset.
+
+Namespace MUST NOT alter hash calculation rules.
+Namespace MUST NOT alter Seal mechanics.
+Namespace MUST NOT introduce business logic or domain policy enforcement.

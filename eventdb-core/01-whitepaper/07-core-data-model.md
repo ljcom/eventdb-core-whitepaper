@@ -37,6 +37,10 @@ Chain represents the ordered integrity sequence of Events maintained under a def
 ### 2.3 Conceptual Notes
 
 A Chain may be institution-local in a federation model. EventDB Core does not require a single global Chain.
+One ledger boundary MAY contain multiple Chains.
+Chains within the same ledger boundary MAY represent different operational partitions.
+Partitioning MUST NOT alter canonical verification rules.
+Integrity remains evaluated per Chain.
 
 ## 3. Event
 

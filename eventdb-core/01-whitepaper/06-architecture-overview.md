@@ -8,6 +8,14 @@ EventDB Core defines a layered integrity architecture for enterprise Event histo
 
 This document describes the conceptual and verification layers only. Storage layout, indexing strategy, and vendor-specific persistence patterns belong to implementation documentation and MUST remain outside this overview.
 
+## Ledger Boundary
+
+A ledger boundary defines the scope within which Chain continuity, Seal checkpoints, and Account authority operate.
+Each Chain MUST exist within exactly one ledger boundary.
+Federation occurs between ledger boundaries.
+A ledger boundary MAY correspond to an institution, tenant, or deployment unit.
+A ledger boundary MUST NOT be interpreted as domain classification (for example, commodity type or asset class).
+
 ## Conceptual Layer
 
 The conceptual layer defines the core semantics of EventDB Core and the boundaries of claims.

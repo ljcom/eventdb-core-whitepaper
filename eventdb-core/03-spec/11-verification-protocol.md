@@ -22,33 +22,37 @@ Before executing any verification flow, a verifier MUST:
 
 A verifier MUST execute Event Chain verification as follows:
 
-1. Select target `chain_id` and ordered Event set.
+1. Select target `namespace_id`, target `chain_id`, and ordered Event set.
 2. Confirm each Event contains all required fields per `03-spec/03-event-envelope.md`.
 3. Validate field formats for each Event.
-4. For each Event, build canonical hash input excluding `signature`.
-5. Canonicalize input and compute Event hash using active hashing rule.
-6. For genesis Event, verify `prev_hash` equals the defined genesis value.
-7. For each non-genesis Event, verify `prev_hash` equals hash of the immediately prior Event by `sequence`.
-8. Verify monotonic, gap-free `sequence` progression for the verified segment.
-9. Verify `signature` of each Event against canonical input and `account_id`.
-10. Mark Event Chain verification as `PASS` only if all checks pass.
-11. Mark Event Chain verification as `FAIL` if any check fails.
+4. Ensure all selected Events belong to the same `namespace_id`.
+5. Reject mixed-namespace Event streams.
+6. For each Event, build canonical hash input excluding `signature`.
+7. Canonicalize input and compute Event hash using active hashing rule.
+8. For genesis Event, verify `prev_hash` equals the defined genesis value.
+9. For each non-genesis Event, verify `prev_hash` equals hash of the immediately prior Event by `sequence`.
+10. Verify monotonic, gap-free `sequence` progression for the verified segment.
+11. Verify `signature` of each Event against canonical input and `account_id`.
+12. Mark Event Chain verification as `PASS` only if all checks pass.
+13. Mark Event Chain verification as `FAIL` if any check fails.
 
 ## 4. Seal Verification
 
 A verifier MUST execute Seal verification as follows:
 
-1. Select target `chain_id` and ordered Seal set.
+1. Select target `namespace_id`, target `chain_id`, and ordered Seal set.
 2. Confirm each Seal contains required fields per `03-spec/07-window-and-seal.md`.
-3. Validate Seal window boundaries and non-overlap requirements.
-4. For each Seal, recompute `window_commitment_hash` from Events in the declared window range.
-5. Build canonical Seal input for hash coverage.
-6. Canonicalize and recompute `seal_hash`.
-7. For first Seal, verify `prev_seal_hash` equals genesis value.
-8. For each subsequent Seal, verify `prev_seal_hash` equals prior `seal_hash` in deterministic order.
-9. Verify Seal `signature` against canonical Seal input and `account_id`.
-10. Mark Seal verification as `PASS` only if all checks pass.
-11. Mark Seal verification as `FAIL` if any check fails.
+3. Validate all Seals in scope belong to the same `namespace_id`.
+4. Validate Seal window boundaries and non-overlap requirements.
+5. For each Seal, recompute `window_commitment_hash` from Events in the declared window range.
+6. Ensure window Events are namespace-consistent with selected `namespace_id`.
+7. Build canonical Seal input for hash coverage.
+8. Canonicalize and recompute `seal_hash`.
+9. For first Seal, verify `prev_seal_hash` equals genesis value.
+10. For each subsequent Seal, verify `prev_seal_hash` equals prior `seal_hash` in deterministic order.
+11. Verify Seal `signature` against canonical Seal input and `account_id`.
+12. Mark Seal verification as `PASS` only if all checks pass.
+13. Mark Seal verification as `FAIL` if any check fails.
 
 ## 5. Snapshot Verification
 

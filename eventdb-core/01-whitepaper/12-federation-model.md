@@ -6,6 +6,14 @@ Change Log Reference: 00-admin/PROJECT_MEMORY.md
 
 This section defines the federated deployment model of EventDB Core. The model is governance-aware and integrity-focused: each institution can operate independently while still supporting cross-boundary verification.
 
+## Ledger Boundary
+
+A ledger boundary defines the scope within which Chain continuity, Seal checkpoints, and Account authority operate.
+Each Chain MUST exist within exactly one ledger boundary.
+Federation occurs between ledger boundaries.
+A ledger boundary MAY correspond to an institution, tenant, or deployment unit.
+A ledger boundary MUST NOT be interpreted as domain classification (for example, commodity type or asset class).
+
 ## 1. Single Institution Chain
 
 In the base deployment form, one institution operates one or more Chains inside its own governance boundary.
@@ -25,6 +33,14 @@ In a federation, multiple institutions operate independent Chains and exchange i
 - Cross-institution checks SHOULD rely on canonical verification rules and stable terminology.
 
 Federation therefore extends verification reach while preserving institutional autonomy.
+
+## Cross-Boundary Reference Principle
+
+EventDB Core does not define shared state across institutions.
+Cross-boundary interaction MUST be based on verifiable artifact exchange.
+One institution MAY reference an externally issued Seal or Chain commitment as evidence.
+Such reference MUST NOT merge Chains across boundaries.
+Cross-boundary verification MUST NOT be interpreted as business acceptance or legal endorsement.
 
 ## 3. No Mandatory Global Ledger
 

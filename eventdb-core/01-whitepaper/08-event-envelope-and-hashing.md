@@ -81,6 +81,9 @@ With determinism:
 
 Determinism therefore MUST be treated as a non-negotiable property of the Event envelope and hashing model.
 
+Deterministic verification is scoped per Chain within a ledger boundary.
+Verification across ledger boundaries requires verifiable artifact exchange and MUST NOT assume shared ordering.
+
 ## 7. Formal Specification References
 
 This whitepaper section is conceptual. Normative definitions, required fields, and verification rules are specified in:

@@ -6,6 +6,7 @@ WHITEPAPER_DIR="$ROOT_DIR/01-whitepaper"
 OUT_DIR="$ROOT_DIR/04-build/out"
 OUT_FILE="$OUT_DIR/eventdb-core-whitepaper.pdf"
 TMP_MD="$OUT_DIR/.whitepaper_combined.md"
+TITLE="EventDB Core: Bridging Mutable Enterprise Data and Verifiable History"
 
 mkdir -p "$OUT_DIR"
 
@@ -56,9 +57,11 @@ for f in "${SOURCES[@]}"; do
 done
 
 {
-  echo "% EventDB Core: A Deterministic Integrity Layer for Enterprise Systems Without Mandatory Blockchain"
+  echo "% $TITLE"
   echo "% Version 0.1"
   echo "% $(date +%F)"
+  echo
+  echo "# $TITLE"
   echo
   for f in "${SOURCES[@]}"; do
     cat "$f"
@@ -72,6 +75,8 @@ BIB_FILE="$WHITEPAPER_DIR/references.bib"
 PANDOC_ARGS=(
   "$TMP_MD"
   --from gfm
+  --standalone
+  --metadata "title=$TITLE"
   --toc
   --toc-depth=2
   --number-sections

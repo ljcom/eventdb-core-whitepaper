@@ -1,0 +1,12 @@
+{
+  "chain_id": "inst-a-chain-01",
+  "window_id": "win-0001",
+  "window_start_sequence": 1,
+  "window_end_sequence": 3,
+  "prev_seal_hash": "SEAL_GENESIS",
+  "window_commitment_hash": "2a93b65d80f5b6ef89c9033cb682f40f8d960c9dc48f2f2d2af9c5d8b4ef8f4d",
+  "seal_hash": "ce1082bde2d4d5e5968ea5780f6cc8f4e4a2de7f02f97f813f862fbc2f0a8f0b",
+  "account_id": "acct-seal-01",
+  "seal_time": "2026-01-01T00:15:00Z",
+  "signature": "sig_base64_seal_0001"
+}

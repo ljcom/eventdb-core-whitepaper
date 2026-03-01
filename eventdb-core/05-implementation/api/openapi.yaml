@@ -1,0 +1,104 @@
+openapi: 3.0.3
+info:
+  title: EventDB Core Verification API
+  version: 0.1.0
+  description: API skeleton for integrity verification workflows.
+paths:
+  /v1/chains/{chain_id}/verify:
+    post:
+      summary: Verify Event chain scope
+      parameters:
+        - in: path
+          name: chain_id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChainVerifyRequest'
+      responses:
+        '200':
+          description: Verification result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyResult'
+  /v1/seals/{chain_id}/verify:
+    post:
+      summary: Verify Seal scope
+      parameters:
+        - in: path
+          name: chain_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Verification result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyResult'
+  /v1/snapshots/{chain_id}/verify:
+    post:
+      summary: Verify Snapshot
+      parameters:
+        - in: path
+          name: chain_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Verification result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyResult'
+  /v1/anchors/{chain_id}/verify:
+    post:
+      summary: Verify Anchor commitment mapping
+      parameters:
+        - in: path
+          name: chain_id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Verification result
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerifyResult'
+components:
+  schemas:
+    ChainVerifyRequest:
+      type: object
+      required: [scope]
+      properties:
+        scope:
+          type: object
+          properties:
+            sequence_from:
+              type: integer
+              format: int64
+            sequence_to:
+              type: integer
+              format: int64
+    VerifyResult:
+      type: object
+      required: [status, checked_scope]
+      properties:
+        status:
+          type: string
+          enum: [PASS, FAIL]
+        checked_scope:
+          type: object
+        error_code:
+          type: string
+        message:
+          type: string

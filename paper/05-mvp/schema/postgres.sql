@@ -82,10 +82,18 @@ create table if not exists projection_registry (
   projection_name text not null,
   projection_ver integer not null,
   logic_checksum text not null,
+  rebuild_strategy text not null default 'full_rebuild',
+  migration_policy text not null default 'replay_only',
   status text not null default 'active',
   created_at timestamptz not null default now(),
   primary key (projection_name, projection_ver)
 );
+
+alter table projection_registry
+  add column if not exists rebuild_strategy text not null default 'full_rebuild';
+
+alter table projection_registry
+  add column if not exists migration_policy text not null default 'replay_only';
 
 create table if not exists projection_checkpoint (
   namespace_id text not null references namespaces(namespace_id),
@@ -122,3 +130,15 @@ create table if not exists read.orders_v1 (
 
 create index if not exists idx_read_orders_v1_ns_chain_status_time
   on read.orders_v1 (namespace_id, chain_id, status, updated_at desc);
+
+create table if not exists sql_write_idempotency (
+  namespace_id text not null references namespaces(namespace_id),
+  chain_id text not null,
+  idempotency_key text not null,
+  statement_hash text not null,
+  event_id text not null,
+  created_at timestamptz not null default now(),
+  primary key (namespace_id, chain_id, idempotency_key),
+  foreign key (namespace_id, chain_id)
+    references eventdb_chain(namespace_id, chain_id)
+);

@@ -57,6 +57,7 @@ SOURCES=(
   "$WHITEPAPER_DIR/12-governance-boundary.md"
   "$WHITEPAPER_DIR/13-security-and-threat-model.md"
   "$WHITEPAPER_DIR/14-performance-and-ops.md"
+  "$WHITEPAPER_DIR/19-versioned-sql-read-models-and-optional-blockchain-anchoring.md"
   "$WHITEPAPER_DIR/15-roadmap.md"
   "$WHITEPAPER_DIR/16-conclusion.md"
   "$WHITEPAPER_DIR/17-blockchain-anchoring-extension-optional.md"

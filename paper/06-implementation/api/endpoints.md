@@ -10,6 +10,8 @@ Status: Draft
 - `POST /v1/snapshots/{chain_id}/verify`: run Snapshot verification.
 - `POST /v1/anchors/{chain_id}/verify`: run Anchor verification.
 - `POST /v1/chains/{chain_id}/events`: append one Event into Chain storage.
+- `POST /v1/seals/{chain_id}/build`: build and persist next Seal window from stored Events.
+- `POST /v1/snapshots/{chain_id}/build`: build and persist Snapshot from verified basis sequence.
 
 ## Response Contract
 

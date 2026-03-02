@@ -2,6 +2,7 @@ import express from 'express';
 import { query } from './db.js';
 import { config } from './config.js';
 import { hashCanonicalObject } from './crypto.js';
+import { buildSeal, buildSnapshot } from './builders.js';
 import { verifyAnchor, verifyChain, verifySeals, verifySnapshot } from './verification.js';
 
 const app = express();
@@ -42,6 +43,32 @@ app.post('/v1/anchors/:chainId/verify', async (req, res) => {
   const namespaceId = req.body?.namespace_id || config.defaultNamespaceId;
   const result = await verifyAnchor({ namespaceId, chainId: req.params.chainId });
   res.status(422).json(result);
+});
+
+app.post('/v1/seals/:chainId/build', async (req, res) => {
+  const namespaceId = req.body?.namespace_id || config.defaultNamespaceId;
+  const result = await buildSeal({
+    namespaceId,
+    chainId: req.params.chainId,
+    windowEndSequence: req.body?.window_end_sequence,
+    accountId: req.body?.account_id,
+    sealTime: req.body?.seal_time,
+    signature: req.body?.signature
+  });
+  res.status(result.status === 'PASS' ? 201 : 422).json(result);
+});
+
+app.post('/v1/snapshots/:chainId/build', async (req, res) => {
+  const namespaceId = req.body?.namespace_id || config.defaultNamespaceId;
+  const result = await buildSnapshot({
+    namespaceId,
+    chainId: req.params.chainId,
+    basisSequence: req.body?.basis_sequence,
+    snapshotId: req.body?.snapshot_id,
+    snapshotTime: req.body?.snapshot_time,
+    signature: req.body?.signature
+  });
+  res.status(result.status === 'PASS' ? 201 : 422).json(result);
 });
 
 app.post('/v1/chains/:chainId/events', async (req, res) => {

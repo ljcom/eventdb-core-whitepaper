@@ -32,7 +32,7 @@ function isRfc3339Utc(value) {
   return !Number.isNaN(date.getTime());
 }
 
-function normalizeUtcTimestamp(value) {
+export function normalizeUtcTimestamp(value) {
   const date = value instanceof Date ? value : new Date(value);
   if (Number.isNaN(date.getTime())) {
     throw new Error('Invalid timestamp');
@@ -40,7 +40,7 @@ function normalizeUtcTimestamp(value) {
   return date.toISOString().replace('.000Z', 'Z');
 }
 
-function buildEventSigningObject(event) {
+export function buildEventSigningObject(event) {
   const signing = {
     chain_id: event.chain_id,
     event_id: event.event_id,
@@ -59,7 +59,7 @@ function buildEventSigningObject(event) {
   return signing;
 }
 
-function buildSealSigningObject(seal) {
+export function buildSealSigningObject(seal) {
   return {
     namespace_id: seal.namespace_id,
     chain_id: seal.chain_id,
@@ -73,7 +73,7 @@ function buildSealSigningObject(seal) {
   };
 }
 
-function buildSnapshotSigningObject(snapshot) {
+export function buildSnapshotSigningObject(snapshot) {
   return {
     namespace_id: snapshot.namespace_id,
     chain_id: snapshot.chain_id,
@@ -202,7 +202,7 @@ export async function verifyChain({ namespaceId, chainId }) {
   });
 }
 
-function buildWindowCommitment({ namespaceId, chainId, start, end, eventHashes }) {
+export function buildWindowCommitment({ namespaceId, chainId, start, end, eventHashes }) {
   return hashCanonicalObject({
     namespace_id: namespaceId,
     chain_id: chainId,
@@ -212,7 +212,7 @@ function buildWindowCommitment({ namespaceId, chainId, start, end, eventHashes }
   });
 }
 
-async function getEventHashesBySequenceRange({ namespaceId, chainId, start, end }) {
+export async function getEventHashesBySequenceRange({ namespaceId, chainId, start, end }) {
   const { rows } = await query(
     `select namespace_id, chain_id, event_id, sequence, prev_hash, account_id, event_type, event_time, payload, signature
      from eventdb_event
@@ -348,7 +348,7 @@ export async function verifySeals({ namespaceId, chainId }) {
   });
 }
 
-function deriveSnapshotData(events) {
+export function deriveSnapshotData(events) {
   const state = {};
   let lastSequence = 0;
 

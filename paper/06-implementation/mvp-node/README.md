@@ -49,6 +49,8 @@ npm run dev
 - `POST /v1/snapshots/:chainId/verify`
 - `POST /v1/anchors/:chainId/verify` (stub, belum implement adapter)
 - `POST /v1/chains/:chainId/events` (append event sederhana)
+- `POST /v1/seals/:chainId/build` (build Seal dari Event di DB)
+- `POST /v1/snapshots/:chainId/build` (build Snapshot dari basis Event/Seal di DB)
 
 Contoh body verifikasi:
 
@@ -84,3 +86,17 @@ Format `ACCOUNT_SECRETS_JSON`:
 ```json
 {"acct-ops-01":"secret-ops","acct-seal-01":"secret-seal","snapshot:inst-a-chain-01":"secret-snapshot"}
 ```
+
+## Integration test
+
+```bash
+npm run test:integration
+```
+
+Test melakukan alur:
+1. insert Event baru;
+2. build Seal;
+3. build Snapshot;
+4. verify `PASS`;
+5. tamper 1 Event langsung di DB;
+6. verify berubah menjadi `FAIL`.

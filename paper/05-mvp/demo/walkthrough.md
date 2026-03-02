@@ -14,4 +14,11 @@ Status: Draft
 
 ## Expected Result
 
-All artifacts MUST either pass deterministic checks or return explicit error code.
+For the current MVP sample artifacts under `paper/05-mvp/sample`:
+
+- Chain verification: `PASS`
+- Seal verification: `PASS`
+- Snapshot verification: `PASS`
+- Anchor verification: `FAIL` (adapter not implemented in MVP)
+
+Assumption: verifier runs with `SIGNATURE_MODE=none` (default in MVP).

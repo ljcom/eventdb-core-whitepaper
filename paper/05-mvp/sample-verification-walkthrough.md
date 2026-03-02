@@ -68,3 +68,11 @@ Verification logic: Anchor verification confirms external publication consistenc
 1. Report `PASS` only if all applicable checks succeed for the selected scope.
 2. Report `FAIL` if any mandatory check fails.
 3. Record failure step and reason deterministically for audit and review.
+
+## Sample Artifact Note
+
+For the published sample set in `paper/05-mvp/sample`:
+
+- namespace scope is `default`;
+- `prev_hash`, `window_commitment_hash`, `seal_hash`, and `snapshot_hash` are aligned with canonical SHA-256 recomputation;
+- expected verification outcome is `PASS` for chain/seal/snapshot when `SIGNATURE_MODE=none`.

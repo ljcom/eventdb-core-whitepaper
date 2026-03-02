@@ -31,7 +31,8 @@ async function main() {
   const seal = JSON.parse(sealText);
   const snapshot = JSON.parse(snapshotText);
 
-  const namespaceId = config.defaultNamespaceId;
+  const namespaceId =
+    events[0]?.namespace_id || seal.namespace_id || snapshot.namespace_id || config.defaultNamespaceId;
   const chainId = events[0]?.chain_id;
 
   if (!chainId) {
@@ -52,9 +53,16 @@ async function main() {
           namespace_id, chain_id, event_id, sequence, prev_hash,
           account_id, event_type, event_time, payload, signature
         ) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
-        on conflict (namespace_id, chain_id, sequence) do nothing`,
+        on conflict (namespace_id, chain_id, sequence) do update set
+          event_id = excluded.event_id,
+          prev_hash = excluded.prev_hash,
+          account_id = excluded.account_id,
+          event_type = excluded.event_type,
+          event_time = excluded.event_time,
+          payload = excluded.payload,
+          signature = excluded.signature`,
         [
-          namespaceId,
+          event.namespace_id || namespaceId,
           event.chain_id,
           event.event_id,
           Number(event.sequence),
@@ -73,9 +81,17 @@ async function main() {
         namespace_id, chain_id, window_id, window_start_sequence, window_end_sequence,
         prev_seal_hash, window_commitment_hash, seal_hash, account_id, seal_time, signature
       ) values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
-      on conflict (namespace_id, chain_id, window_id) do nothing`,
+      on conflict (namespace_id, chain_id, window_id) do update set
+        window_start_sequence = excluded.window_start_sequence,
+        window_end_sequence = excluded.window_end_sequence,
+        prev_seal_hash = excluded.prev_seal_hash,
+        window_commitment_hash = excluded.window_commitment_hash,
+        seal_hash = excluded.seal_hash,
+        account_id = excluded.account_id,
+        seal_time = excluded.seal_time,
+        signature = excluded.signature`,
       [
-        namespaceId,
+        seal.namespace_id || namespaceId,
         seal.chain_id,
         seal.window_id,
         Number(seal.window_start_sequence),
@@ -94,9 +110,15 @@ async function main() {
         namespace_id, chain_id, snapshot_id, basis_sequence, basis_seal_hash,
         snapshot_time, snapshot_hash, snapshot_data, signature
       ) values ($1,$2,$3,$4,$5,$6,$7,$8,$9)
-      on conflict (namespace_id, chain_id, snapshot_id) do nothing`,
+      on conflict (namespace_id, chain_id, snapshot_id) do update set
+        basis_sequence = excluded.basis_sequence,
+        basis_seal_hash = excluded.basis_seal_hash,
+        snapshot_time = excluded.snapshot_time,
+        snapshot_hash = excluded.snapshot_hash,
+        snapshot_data = excluded.snapshot_data,
+        signature = excluded.signature`,
       [
-        namespaceId,
+        snapshot.namespace_id || namespaceId,
         snapshot.chain_id,
         snapshot.snapshot_id,
         Number(snapshot.basis_sequence),

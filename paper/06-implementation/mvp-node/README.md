@@ -33,6 +33,8 @@ Jika database pada `DATABASE_URL` belum ada, script akan mencoba membuatnya otom
 npm run sample:load
 ```
 
+`sample:load` melakukan upsert, jadi aman dijalankan ulang untuk sinkronisasi sample terbaru.
+
 3. Start API:
 
 ```bash

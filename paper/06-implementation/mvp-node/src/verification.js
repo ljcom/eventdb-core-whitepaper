@@ -1,6 +1,7 @@
 import { query } from './db.js';
 import { config } from './config.js';
 import { hashCanonicalObject, verifySignature } from './crypto.js';
+import { canonicalJsonString } from './canonical-json.js';
 
 function fail(errorCode, message, checkedScope = {}) {
   return {
@@ -406,7 +407,7 @@ export async function verifySnapshot({ namespaceId, chainId, snapshotId }) {
   const derivedData = deriveSnapshotData(basisEvents);
   const derivedHash = hashCanonicalObject(buildSnapshotSigningObject(snapshot));
 
-  if (JSON.stringify(derivedData) !== JSON.stringify(snapshot.snapshot_data)) {
+  if (canonicalJsonString(derivedData) !== canonicalJsonString(snapshot.snapshot_data)) {
     return fail('SNAPSHOT_DERIVATION_MISMATCH', 'Snapshot data derivation mismatch', {
       namespace_id: ns,
       chain_id: chainId,

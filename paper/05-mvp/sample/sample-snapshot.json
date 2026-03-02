@@ -1,10 +1,11 @@
 {
+  "namespace_id": "default",
   "chain_id": "inst-a-chain-01",
   "snapshot_id": "snap-0001",
   "basis_sequence": 3,
-  "basis_seal_hash": "ce1082bde2d4d5e5968ea5780f6cc8f4e4a2de7f02f97f813f862fbc2f0a8f0b",
+  "basis_seal_hash": "c64bd7bbfcf5a717ffc730728d1407be3200cc537f03d98e3c7ca63b4b0617e7",
   "snapshot_time": "2026-01-01T00:20:00Z",
-  "snapshot_hash": "58f6698fa2c76673ad60f1980a044ff2f4dc2b8d8b1d8aaec1247c9e38f8a22a",
+  "snapshot_hash": "0956c6b8a687a2a954d7ec73eac27c8e7a40b5d889f543fb1d93c05bb669d581",
   "snapshot_data": {
     "last_sequence": 3,
     "state": {

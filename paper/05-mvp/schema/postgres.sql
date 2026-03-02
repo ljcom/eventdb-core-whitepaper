@@ -77,3 +77,48 @@ create table if not exists eventdb_snapshot (
 
 create index if not exists idx_eventdb_snapshot_ns_chain_time
   on eventdb_snapshot (namespace_id, chain_id, snapshot_time);
+
+create table if not exists projection_registry (
+  projection_name text not null,
+  projection_ver integer not null,
+  logic_checksum text not null,
+  status text not null default 'active',
+  created_at timestamptz not null default now(),
+  primary key (projection_name, projection_ver)
+);
+
+create table if not exists projection_checkpoint (
+  namespace_id text not null references namespaces(namespace_id),
+  chain_id text not null,
+  projection_name text not null,
+  projection_ver integer not null,
+  last_sequence bigint not null default 0,
+  updated_at timestamptz not null default now(),
+  primary key (namespace_id, chain_id, projection_name, projection_ver),
+  foreign key (namespace_id, chain_id)
+    references eventdb_chain(namespace_id, chain_id),
+  foreign key (projection_name, projection_ver)
+    references projection_registry(projection_name, projection_ver)
+);
+
+create index if not exists idx_projection_checkpoint_ns_chain
+  on projection_checkpoint (namespace_id, chain_id, projection_name, projection_ver, last_sequence);
+
+create schema if not exists read;
+
+create table if not exists read.orders_v1 (
+  namespace_id text not null references namespaces(namespace_id),
+  chain_id text not null,
+  order_id text not null,
+  status text not null,
+  updated_at timestamptz not null,
+  source_event_id text not null,
+  source_sequence bigint not null,
+  projection_ver integer not null,
+  primary key (namespace_id, chain_id, order_id),
+  foreign key (namespace_id, chain_id)
+    references eventdb_chain(namespace_id, chain_id)
+);
+
+create index if not exists idx_read_orders_v1_ns_chain_status_time
+  on read.orders_v1 (namespace_id, chain_id, status, updated_at desc);

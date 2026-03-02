@@ -61,8 +61,8 @@ SOURCES=(
   "$WHITEPAPER_DIR/15-roadmap.md"
   "$WHITEPAPER_DIR/16-conclusion.md"
   "$WHITEPAPER_DIR/17-blockchain-anchoring-extension-optional.md"
-  "$WHITEPAPER_DIR/appendix-integrity-model.md"
   "$WHITEPAPER_DIR/18-future-development-directions.md"
+  "$WHITEPAPER_DIR/appendix-integrity-model.md"
 )
 
 DIAGRAM_SOURCES=(

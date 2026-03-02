@@ -24,11 +24,19 @@ function isRfc3339Utc(value) {
   if (typeof value !== 'string') {
     return false;
   }
-  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/.test(value)) {
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{1,3})?Z$/.test(value)) {
     return false;
   }
   const date = new Date(value);
-  return !Number.isNaN(date.getTime()) && date.toISOString() === value;
+  return !Number.isNaN(date.getTime());
+}
+
+function normalizeUtcTimestamp(value) {
+  const date = value instanceof Date ? value : new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    throw new Error('Invalid timestamp');
+  }
+  return date.toISOString().replace('.000Z', 'Z');
 }
 
 function buildEventSigningObject(event) {
@@ -39,7 +47,7 @@ function buildEventSigningObject(event) {
     prev_hash: event.prev_hash,
     account_id: event.account_id,
     event_type: event.event_type,
-    event_time: new Date(event.event_time).toISOString(),
+    event_time: normalizeUtcTimestamp(event.event_time),
     payload: event.payload
   };
 
@@ -60,7 +68,7 @@ function buildSealSigningObject(seal) {
     prev_seal_hash: seal.prev_seal_hash,
     window_commitment_hash: seal.window_commitment_hash,
     account_id: seal.account_id,
-    seal_time: new Date(seal.seal_time).toISOString()
+    seal_time: normalizeUtcTimestamp(seal.seal_time)
   };
 }
 
@@ -71,7 +79,7 @@ function buildSnapshotSigningObject(snapshot) {
     snapshot_id: snapshot.snapshot_id,
     basis_sequence: Number(snapshot.basis_sequence),
     basis_seal_hash: snapshot.basis_seal_hash || null,
-    snapshot_time: new Date(snapshot.snapshot_time).toISOString(),
+    snapshot_time: normalizeUtcTimestamp(snapshot.snapshot_time),
     snapshot_data: snapshot.snapshot_data
   };
 }
@@ -101,7 +109,11 @@ function validateEventShape(event) {
   if (typeof event.prev_hash !== 'string' || !event.prev_hash) return 'Invalid prev_hash';
   if (typeof event.account_id !== 'string' || !event.account_id) return 'Invalid account_id';
   if (typeof event.event_type !== 'string' || !event.event_type) return 'Invalid event_type';
-  if (!isRfc3339Utc(event.event_time)) return 'Invalid event_time';
+  try {
+    if (!isRfc3339Utc(normalizeUtcTimestamp(event.event_time))) return 'Invalid event_time';
+  } catch {
+    return 'Invalid event_time';
+  }
   if (typeof event.payload !== 'object' || event.payload === null) return 'Invalid payload';
   if (typeof event.signature !== 'string' || !event.signature) return 'Invalid signature';
 
@@ -257,12 +269,24 @@ export async function verifySeals({ namespaceId, chainId }) {
       });
     }
 
-    const { rows: windowEvents, hashes } = await getEventHashesBySequenceRange({
-      namespaceId: ns,
-      chainId,
-      start,
-      end
-    });
+    let windowEvents;
+    let hashes;
+    try {
+      const result = await getEventHashesBySequenceRange({
+        namespaceId: ns,
+        chainId,
+        start,
+        end
+      });
+      windowEvents = result.rows;
+      hashes = result.hashes;
+    } catch (error) {
+      return fail('SEAL_WINDOW_INVALID', error.message, {
+        namespace_id: ns,
+        chain_id: chainId,
+        window_id: seal.window_id
+      });
+    }
 
     if (windowEvents.length !== end - start + 1) {
       return fail('SEAL_WINDOW_INVALID', 'Window events are incomplete', {
@@ -380,15 +404,7 @@ export async function verifySnapshot({ namespaceId, chainId, snapshotId }) {
   }
 
   const derivedData = deriveSnapshotData(basisEvents);
-  const derivedHash = hashCanonicalObject({
-    namespace_id: ns,
-    chain_id: chainId,
-    snapshot_id: snapshot.snapshot_id,
-    basis_sequence: basisSequence,
-    basis_seal_hash: snapshot.basis_seal_hash || null,
-    snapshot_time: new Date(snapshot.snapshot_time).toISOString(),
-    snapshot_data: snapshot.snapshot_data
-  });
+  const derivedHash = hashCanonicalObject(buildSnapshotSigningObject(snapshot));
 
   if (JSON.stringify(derivedData) !== JSON.stringify(snapshot.snapshot_data)) {
     return fail('SNAPSHOT_DERIVATION_MISMATCH', 'Snapshot data derivation mismatch', {
